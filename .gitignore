@@ -1,0 +1,5 @@
+
+bin/
+id_rsa*
+*.log
+logs_raft/

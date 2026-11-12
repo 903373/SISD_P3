@@ -1,0 +1,17 @@
+cd raft
+
+go fmt ./...
+go vet ./...
+
+$env:CGO_ENABLED="0"; $env:GOOS="linux"; $env:GOARCH="arm64"
+go build -o bin/srvraft ./cmd/srvraft
+$env:GOARCH="amd64"
+go test -c -o bin/test_raft ./internal/testintegracionraft1
+$env:GOOS="windows"
+
+scp bin/srvraft bin/test_raft a903373@central.cps.unizar.es:/misc/alumnos/sd/sd2627/a903373/practica3/raft/bin/
+ssh a903373@central.cps.unizar.es
+
+cd /misc/alumnos/sd/sd2627/a903373/practica3/raft
+chmod +x bin/*
+./bin/test_raft -test.v -test.run TestPrimerasPruebas
